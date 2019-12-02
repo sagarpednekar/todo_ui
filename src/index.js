@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import axios from "axios";
-import { Provider } from "react-redux";
-import { configureStore, reducers } from "./store";
-import "./index.css";
+// import axios from "axios";
+// import { Provider } from "react-redux";
+// import { configureStore, reducers } from "./store";
 import App from "./App";
-import 'semantic-ui-css/semantic.min.css'
+import "semantic-ui-css/semantic.min.css";
 
 import * as serviceWorker from "./serviceWorker";
 
@@ -22,14 +21,14 @@ import * as serviceWorker from "./serviceWorker";
 //   }
 // );
 
-const store = configureStore(axios, {}, reducers);
+// const store = configureStore(axios, {}, reducers);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  // <Provider store={store}>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  // </Provider>,
   document.getElementById("root")
 );
 

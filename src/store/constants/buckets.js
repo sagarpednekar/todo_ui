@@ -1,1 +1,0 @@
-export const ADD_BUCKETS = "ADD_BUCKETS [BUCKETS]";

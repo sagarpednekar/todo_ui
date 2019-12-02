@@ -11,10 +11,10 @@ const BucketCard = ({ bucket }) => {
     title: bucket.title,
     isEditable: false
   });
-  const [taskData, setTaskData] = useState({
-    title: "",
-    isEditable: false
-  });
+  // const [taskData, setTaskData] = useState({
+  //   title: "",
+  //   isEditable: false
+  // });
 
   const handleSubmit = title => {
     setTaskList([
@@ -29,14 +29,14 @@ const BucketCard = ({ bucket }) => {
     setTaskList(newList);
   };
 
-  const editTask = id => {
-    const task = taskList.find(task => task.id === id);
-    setTaskData({
-      ...task,
-      title: task.title,
-      isEditable: !taskData.isEditable
-    });
-  };
+  // const editTask = id => {
+  //   const task = taskList.find(task => task.id === id);
+  //   setTaskData({
+  //     ...task,
+  //     title: task.title,
+  //     isEditable: !taskData.isEditable
+  //   });
+  // };
 
   return (
     <Card>
