@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import { configureStore, reducers } from "./store";
 import "./index.css";
 import App from "./App";
+import 'semantic-ui-css/semantic.min.css'
+
 import * as serviceWorker from "./serviceWorker";
 
 // //add header token for every request
