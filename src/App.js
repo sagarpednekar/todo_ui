@@ -2,7 +2,6 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 import Navbar from "./web/Components/Navbar";
-import AddBucket from "./web/Components/Buckets/AddBucket";
 import ListBuckets from "./web/Components/Buckets/ListBuckets";
 const buckets = [
   {
@@ -20,10 +19,6 @@ function App() {
       <Navbar />
       <header className="App-header" style={{ marginTop: "7em" }}>
         <Container text style={{ marginTop: "7em" }}>
-          <Route path="/"></Route>
-          <Route exact path="/buckets/add">
-            <AddBucket />
-          </Route>
           <Route exact path="/buckets/list">
             <ListBuckets buckets={buckets} />
           </Route>
