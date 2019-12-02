@@ -19,7 +19,7 @@ function App() {
       <Navbar />
       <header className="App-header" style={{ marginTop: "7em" }}>
         <Container text style={{ marginTop: "7em" }}>
-          <Route exact path="/buckets/list">
+          <Route exact path="/">
             <ListBuckets buckets={buckets} />
           </Route>
         </Container>
