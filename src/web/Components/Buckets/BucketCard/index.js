@@ -3,18 +3,14 @@ import { Card, Button, Icon, List, Input } from "semantic-ui-react";
 import { Modal } from "semantic-ui-react";
 
 import Task from "../Task";
-const BucketCard = ({ bucket }) => {
+const BucketCard = ({ bucket, updateBucket, deleteBucket }) => {
   const [taskList, setTaskList] = useState(bucket.tasks);
   const [open, toggleModal] = useState(false);
   const [title, setTitle] = useState(null);
   const [bucketData, setBucketData] = useState({
-    title: bucket.title,
+    name: bucket.name,
     isEditable: false
   });
-  // const [taskData, setTaskData] = useState({
-  //   title: "",
-  //   isEditable: false
-  // });
 
   const handleSubmit = title => {
     setTaskList([
@@ -29,46 +25,48 @@ const BucketCard = ({ bucket }) => {
     setTaskList(newList);
   };
 
-  // const editTask = id => {
-  //   const task = taskList.find(task => task.id === id);
-  //   setTaskData({
-  //     ...task,
-  //     title: task.title,
-  //     isEditable: !taskData.isEditable
-  //   });
-  // };
-
   return (
     <Card>
       <Card.Content>
         <Card.Header>
           {!bucketData.isEditable ? (
-            bucketData.title
+            bucketData.name
           ) : (
             <Input
               type="text"
               size="mini"
-              value={bucketData.title}
+              value={bucketData.name}
               transparent
               onChange={e => {
-                setBucketData({ ...bucketData, title: e.target.value });
+                setBucketData({ ...bucketData, name: e.target.value });
               }}
               maxLength="18"
             />
           )}
-
-          <Button
-            icon={bucketData.isEditable ? "checkmark" : "edit"}
-            circular
-            onClick={e =>
-              setBucketData({
-                ...bucketData,
-                isEditable: !bucketData.isEditable
-              })
-            }
-            floated="right"
-            size="small"
-          />
+          {bucketData.isEditable ? (
+            <Button
+              icon={"checkmark"}
+              circular
+              onClick={e =>
+                updateBucket(bucket.id, { bucket: { name: bucketData.name } })
+              }
+              floated="right"
+              size="small"
+            />
+          ) : (
+            <Button
+              icon={"edit"}
+              circular
+              onClick={e => {
+                setBucketData({
+                  ...bucketData,
+                  isEditable: !bucketData.isEditable
+                });
+              }}
+              floated="right"
+              size="small"
+            />
+          )}
         </Card.Header>
 
         <Modal size="small" open={open}>
@@ -103,32 +101,9 @@ const BucketCard = ({ bucket }) => {
                     return (
                       <List.Item key={index}>
                         <List.Content>
-                          <Task title={task.title} status={task.status} />
+                          <Task title={task.name} status={task.status} />
 
-                          {/* {taskData && !taskData.isEditable ? (
-                            <Task title={task.title} status={task.status} />
-                          ) : (
-                            <Input
-                              type="text"
-                              size="mini"
-                              value={bucketData.title}
-                              transparent
-                              onChange={e => {
-                                setBucketData({
-                                  ...bucketData,
-                                  title: e.target.value
-                                });
-                              }}
-                              maxLength="18"
-                            />
-                          )} */}
                           <Button.Group size="mini" floated="right">
-                            {/* <Button
-                              icon="edit"
-                              primary
-                              onClick={e => editTask(task.id)}
-                            />
-                            <Button.Or /> */}
                             <Button
                               icon="remove"
                               onClick={e => removeTask(task.id)}
@@ -146,16 +121,21 @@ const BucketCard = ({ bucket }) => {
         )}
       </Card.Content>
       <Card.Content>
-        <Button
-          icon
-          floated="left"
-          labelPosition="right"
-          onClick={e => toggleModal(!open)}
-          size="small"
-        >
-          Add Task
-          <Icon name="add" />
-        </Button>
+        <div className="ui two buttons">
+          <Button basic onClick={e => toggleModal(!open)}>
+            Add Task
+          </Button>
+          <Button
+            basic
+            color="red"
+            onClick={e => {
+              deleteBucket(bucket.id);
+              console.log("clicked");
+            }}
+          >
+            Delete Bucket
+          </Button>
+        </div>
       </Card.Content>
     </Card>
   );

@@ -2,14 +2,17 @@ import React, { useState } from "react";
 import { Card, Button, Segment, Modal } from "semantic-ui-react";
 import BucketCard from "../BucketCard";
 
-const ListBuckets = ({ buckets }) => {
+const ListBuckets = ({ buckets, addNewBucket, updateBucket, deleteBucket }) => {
   const [open, toggleModal] = useState(false);
-  const [title, setTitle] = useState(null);
+  const [name, setName] = useState(null);
   const [bucketList, setBucketList] = useState(buckets);
 
-  const handleSubmit = title => {
-    setBucketList([...bucketList, { title, tasks: [] }]);
-    setTitle(null);
+  const handleSubmit = name => {
+    setBucketList([...bucketList, { name, tasks: [] }]);
+    addNewBucket({ bucket: { name } })
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+    setName(null);
   };
 
   return (
@@ -20,14 +23,15 @@ const ListBuckets = ({ buckets }) => {
         </Button>
       </div>
       <Card.Group>
-        {/* <BucketCard bucket={{ ...bucketList }} /> */}
-        {/* <BucketCard bucket={{ ...bucketList }} />
-        <BucketCard bucket={{ ...bucketList }} />
-        <BucketCard bucket={{ ...bucketList }} />
-        <BucketCard bucket={{ ...bucketList }} /> */}
         {bucketList.length > 0
           ? bucketList.map(bucket => {
-              return <BucketCard bucket={{ ...bucket }} />;
+              return (
+                <BucketCard
+                  bucket={{ ...bucket }}
+                  updateBucket={updateBucket}
+                  deleteBucket={deleteBucket}
+                />
+              );
             })
           : []}
       </Card.Group>
@@ -38,8 +42,8 @@ const ListBuckets = ({ buckets }) => {
           <form>
             <input
               type="text"
-              value={title}
-              onChange={e => setTitle(e.target.value)}
+              value={name}
+              onChange={e => setName(e.target.value)}
               placeholder="Bucket name"
             />
           </form>
@@ -48,7 +52,7 @@ const ListBuckets = ({ buckets }) => {
           <Button
             onClick={e => {
               toggleModal(!open);
-              handleSubmit(title);
+              handleSubmit(name);
             }}
             primary
           >

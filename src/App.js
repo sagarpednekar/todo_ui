@@ -1,8 +1,10 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
+
 import Navbar from "./web/Components/Navbar";
 import ListBuckets from "./web/Components/Buckets/ListBuckets";
+import BucketsWrapper from "./containers/Buckets";
 const buckets = [
   {
     id: 1,
@@ -13,14 +15,16 @@ const buckets = [
     ]
   }
 ];
-function App() {
+function App(props) {
+  console.log(props);
   return (
     <div className="App">
       <Navbar />
       <header className="App-header" style={{ marginTop: "7em" }}>
         <Container text style={{ marginTop: "7em" }}>
           <Route exact path="/">
-            <ListBuckets buckets={buckets} />
+            <BucketsWrapper />
+            {/* <ListBuckets buckets={buckets} /> */}
           </Route>
         </Container>
       </header>
